@@ -47,9 +47,6 @@ const router = new VueRouter({
     {
       path:'/profile',
       component:Profile,
-      meta: {
-        showFooter:true
-      }
     },
     {
       path:'/',

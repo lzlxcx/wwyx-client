@@ -5,26 +5,27 @@
         <i class="iconfont icon-waimai"></i>
       </span>
       <span>首页</span>
-    </span>
-    <a href="javascript:;" class="guide_item" @click="goTo('/identify')" :class="{on: $route.path==='/identify'}">
-    <span class="item_icon">
-      <i class="iconfont icon-search"></i>
-    </span>
-      <span>识物</span>
-    </a>
-    <a href="javascript:;" class="guide_item" @click="goTo('/feilei')" :class="{on: $route.path==='/feilei'}">
-    <span class="item_icon">
-      <i class="iconfont icon-dingdan"></i>
-    </span>
+      </span>
+      <a href="javascript:;" class="guide_item" @click="goTo('/feilei')" :class="{on: $route.path==='/feilei'}">
+      <span class="item_icon">
+        <i class="iconfont icon-dingdan"></i>
+      </span>
       <span>分类</span>
     </a>
-    <a href="javascript:;" class="guide_item" @click="goTo('/shop')" :class="{on: $route.path==='/shop'}">
-    <span class="item_icon">
-      <i class="iconfont icon-geren"></i>
-    </span>
-      <span>购物车</span>
-    </a>
-    <a href="javascript:;" class="guide_item" @click="goTo('/profile')" :class="{on: $route.path==='/profile'}">
+
+      <a href="javascript:;" class="guide_item" @click="goTo('/identify')" :class="{on: $route.path==='/identify'}">
+      <span class="item_icon">
+        <i class="iconfont icon-search"></i>
+      </span>
+        <span>识物</span>
+      </a>
+      <a href="javascript:;" class="guide_item" @click="goTo('/shop')" :class="{on: $route.path==='/shop'}">
+      <span class="item_icon">
+        <i class="iconfont icon-geren"></i>
+      </span>
+        <span>购物车</span>
+      </a>
+      <a href="javascript:;" class="guide_item" @click="goTo('/profile')" :class="{on: $route.path==='/profile'}">
     <span class="item_icon">
       <i class="iconfont icon-geren"></i>
     </span>

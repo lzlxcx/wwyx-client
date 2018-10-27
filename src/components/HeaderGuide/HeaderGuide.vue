@@ -4,7 +4,7 @@
     <div class="topBar">
       <div class="bd">
         <div class="topRow">
-          <a class="iconZ" href="javascript:;"></a>
+          <a class="iconZ" href="javascript:;"  @click="$router.replace('/home')"></a>
           <a href="javascript:;">
             <i class="logo"></i>
           </a>
@@ -13,7 +13,7 @@
               <i class="iconSearch"></i>
             </a>
             <a class="cart" href="javascript:;">
-              <i class="iconCart"></i>
+              <i class="iconCart" @click="$router.replace('./shop')"></i>
             </a>
           </div>
         </div>

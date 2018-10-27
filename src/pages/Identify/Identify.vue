@@ -1,5 +1,5 @@
 <template>
- <section class="shiWu">
+  <section class="shiWu">
 
    <!--<div class="topHeader">
          <div></div>
@@ -101,14 +101,83 @@
        </div>
      </div>
 
+     <div class="tenFifteen">
+       <div class="inner">
+         <div class="title">十点一刻</div>
+         <div id="tenFifteenBS" ref="ten">
+           <div class="list" v-if="shiwu_data.tenfifteen">
+             <a class="main" href="javascript:;" v-for="(item,index) in shiwu_data.tenfifteen" :key="index">
+               <div class="line-title">
+                 <span>今日话题</span>
+               </div>
+               <div class="title">{{item.title}}</div>
+               <div class="desc">{{item.desc}}</div>
+               <div class="joinInfo">
+                 <div class="joininner">
+                   <div class="avatars" v-if="item.participantAvatar">
+                     <div class="avatar" v-for="(avatar,index) in item.participantAvatar" :key="index" v-if="avatar">
+                       <img :src="avatar" alt="">
+                     </div>
+                   </div>
+                   <div class="joincount">
+                     {{item.participantNum}}人参与话题
+                   </div>
+                 </div>
+               </div>
+             </a>
+             <a class="more" href="javascript:;">
+               <div class="inner">
+                 <div class="text">查看全部话题</div>
+                 <i class="right-icon"></i>
+               </div>
+             </a>
+           </div>
+         </div>
+       </div>
+     </div>
 
+     <div class="shiWuTui">
+       <div class="tuiContent">
+         <div class="tuiTitle">严选甄品</div>
+         <MainItem :mainData="shiwu_data.zhenOne"/>
+         <MinItem :minorData="shiwu_data.zhenTwo"/>
+         <MinItem :minorData="shiwu_data.zhenThree"/>
+       </div>
+     </div>
 
+     <div class="look">
+       <div class="lookTitle">严选LOOK</div>
+         <div class="lookImg">
+           <img src="//yanxuan.nosdn.127.net/43f61b61a77a729df490048c2f2f9ae9.jpg?imageView&quality=75" alt="">
+         </div>
+         <div class="imgInfo">
+           <div class="author">
+             <div class="avatar">
+               <img src="//yanxuan.nosdn.127.net/40a508b48275880ad5217342b8b13355.jpg?imageView&quality=75&thumbnail=48y48" alt="">
+             </div>
+             <div class="authorName">vicyqueen</div>
+           </div>
+           <div class="desc">送闺蜜的，很漂亮嘿嘿</div>
+         </div>
+     </div>
+
+     <div class="more">
+       <div class="moreTitle">
+         <div class="inner">更多精彩</div>
+       </div>
+       <div class="moreContent">
+         <div>
+           <a class="item" href="javascript:;" v-if="shiwu_data.findMore" v-for="(more,index) in shiwu_data.findMore" :key="index">
+             <div class="imgContainer" :style="{backgroundImage:`url(${more.itemPicUrl})`}"></div>
+             <div class="desc">{{more.title}}</div>
+           </a>
+         </div>
+       </div>
+     </div>
 
    </div>
-
-
-     <div class="shiWuContent"></div>
  </section>
+
 </template>
 
 <script>
@@ -148,6 +217,11 @@
           click: true,
           scrollX:true,
         })
+        new BScroll(this.$refs.ten,{
+          click:true,
+          scrollX:true
+        })
+
       }
     },
     computed:{
@@ -160,6 +234,8 @@
       HeaderGuide
     }
   }
+
+
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
@@ -246,6 +322,7 @@
       width: 10rem;
       margin: auto
       padding-top 1.16rem
+      touch-action: none
       .shiWuWra
         width 100%
         height 100%
@@ -522,4 +599,198 @@
             font-size: .42667rem;
             height: 1.6rem;
             line-height: 1.6rem
+      .tenFifteen
+        overflow: hidden;
+        padding: 0 .4rem .53333rem;
+        height: 7.61333rem;
+        background-color: #fff;
+        margin-bottom: .26667rem
+        .inner
+          >.title
+            background-color: #fff;
+            text-align: center;
+            font-size: .42667rem;
+            height: 1.6rem;
+            line-height: 1.6rem
+          #tenFifteenBS
+            display flex
+            .list
+              flex 1
+              display flex
+              a
+                position: relative;
+                width: 7.73333rem;
+                height: 5.48rem;
+                padding: .50667rem .53333rem 1.05333rem;
+                margin-right: .4rem;
+                text-align: center;
+                color: #333
+                box-sizing border-box
+                display: inline-block;
+                vertical-align: middle;
+                &.main
+                  position relative
+                  background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/tenFifteen-2a1d0ea11b.png);
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%
+                  >.line-title
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: .53333rem
+                    &::before,&::after
+                      content: ' ';
+                      display: block;
+                      width: .32rem;
+                      height: 1px;
+                      background-color: #7f7f7f
+                    span
+                      margin: 0 .10667rem;
+                      font-size: .32rem;
+                      color: #7f7f7f
+
+                  >.title
+                    font-size: .48rem;
+                    font-weight: 700;
+                    margin-bottom: .18667rem
+                  >.desc
+                    font-size: .37333rem;
+                    line-height: 1.5;
+                    display: block;
+                    text-align center
+                    overflow: hidden;
+                    text-overflow: ellipsis
+
+                  >.joinInfo
+                    position: absolute;
+                    bottom: 1.05333rem;
+                    width: 6.66667rem;
+                    text-align: center
+                    >.joininner
+                      display: inline-block;
+                      overflow: hidden
+                      >.avatars
+                        float: left;
+                        margin-right: .21333rem
+                        >.avatar
+                          position: relative;
+                          float: left;
+                          height: .64rem;
+                          width: .64rem;
+                          overflow: hidden;
+                          border: 1px solid #fff;
+                          border-radius: 50%
+                      >.joincount
+                        float: left;
+                        text-align: left;
+                        line-height: .64rem;
+                        font-size: .32rem;
+                        color: #7f7f7f
+                &.more
+                  position: relative;
+                  height: 5.12rem;
+                  border: (10*75/$rem) solid #e6e6e6;
+                  padding: 0;
+                  margin-right: 0;
+                  background-color: #fafafa
+                  >.inner
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                    width: 3.2rem;
+                    height: .50667rem;
+                    display: flex;
+                    align-items: center
+                    >.text
+                      color: #7f7f7f;
+                      font-size: .42667rem;
+                      line-height: .50667rem;
+                      margin-right: .22667rem
+                    >.right-icon
+                      display: inline-block;
+                      vertical-align: middle;
+                      background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/circle-right-arrow-3d59025cb6.png);
+                      background-repeat: no-repeat;
+                      background-size: 100% 100%;
+                      width: .4rem;
+                      height: .4rem
+
+      .look
+        position: relative;
+        display: block;
+        color: #333
+        .lookTitle
+          background-color: #fff;
+          text-align: center;
+          font-size: .42667rem;
+          height: 1.6rem;
+          line-height: 1.6rem
+        .lookImg
+          width 100%
+          position relative
+          img
+            width 100%
+            display block
+        .imgInfo
+          overflow: hidden;
+          position: relative;
+          padding: .32rem .4rem .61333rem;
+          background-color: #fff
+          .author
+            height: 0.64rem;
+            font-size: 0.32rem
+            margin-bottom: .32rem
+            display flex
+            line-height 100%
+            .authorName
+              padding-top (10*75/$rem)
+
+          .desc
+            font-size: .37333rem;
+            line-height: 1.6;
+            color: #7f7f7f
+      .more
+        margin: 0 .4rem .4rem
+        .moreTitle
+          height: 1.86667rem
+          display flex
+          align-items center
+          &::before,&::after
+            content: ' ';
+            display: block;
+            width: 3.52rem;
+            height: 0.013333333333333rem
+            background-color: #d9d9d9
+          .inner
+            margin: 0 .32rem;
+            font-size: .37333rem;
+            color: #333
+        .moreContent
+          display: block;
+          color: #333
+          .item
+            display: block;
+            padding: .32rem;
+            margin-bottom: .4rem;
+            background-color: #fff;
+            color: #333
+            .imgContainer
+              background-image: url(//yanxuan.nosdn.127.net/88af2bdceecfa9eb1ebc8cbc85b4eb61.jpg?imageView&quality=75)
+              background-position: center;
+              background-repeat: no-repeat
+              width: 8.56rem;
+              height: 4.8rem
+              background-color: #f4f4f4
+            .desc
+              background-color: #fff;
+              font-size: .37333rem;
+              padding-top: .38667rem;
+              padding-bottom: .37333rem;
+              line-height: 1.2;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden
 </style>

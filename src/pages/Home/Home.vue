@@ -1,19 +1,25 @@
 <template>
   <section class="home">
     <div class="homeHeader">
-      <div class="homeContent">
-        <a href="javascript:;" class="logo"></a>
-        <div class="search">
-          <i class="search_icon"></i>
-          <span>搜索商品，共16679款好物</span>
+      <div class="homeContainer">
+        <div class="homeContent">
+          <a href="javascript:;" class="logo"></a>
+          <div class="search">
+            <i class="search_icon"></i>
+            <span>搜索商品，共16679款好物</span>
+          </div>
+        </div>
+        <div class="listContainer">
+          <div class="listContent" ref="listContent">
+            <ul class="navList">
+              <li v-for="(list,index) in lists" :key="index" :class="{active:index === isActive}" @click="isNow(index)">
+                <span>{{list}}</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-        <div class="listContent" ref="listContent">
-          <ul class="navList">
-            <li v-for="(list,index) in lists" :key="index" :class="{active:index === isActive}" @click="isNow(index)">{{list}}</li>
-          </ul>
-        </div>
-      </div>
+    </div>
 
     <div class="homeWra">
       <div class="navWra">
@@ -206,7 +212,7 @@
       </header>
 
       <div class="lastImg">
-        <div class="lastInner">
+        <div class="lastInner" ref="lastInner">
           <ul class="imgList" v-if="home_data.topicList">
             <li class="imgItem" v-for="(topic,index) in home_data.topicList" :key="index">
               <a class="imgWrap" href="">
@@ -242,7 +248,7 @@
 
 
 
-   <!-- <div class="newsWarp" v-if="isShowNews">
+<!--    <div class="newsWarp" v-if="isShowNews">
       <div class="mask"></div>
       <i class="close-button" @click = 'isShowNews = false'></i>
       <div class="detail-wapr">
@@ -276,6 +282,8 @@
       </div>
     </div>-->
 
+    <i class="goToTop" @click="goToTop" v-if="isShowGotoTop"></i>
+
   </section>
 </template>
 
@@ -291,7 +299,7 @@
       return{
         isActive: 0,
         countdownTime:0,
-        isShowGotoTop:0,
+        isShowGotoTop:false,
         isShowNews:true,
         lists:['推荐','居家','鞋包配饰','服装','电器','洗护','饮食','餐厨','婴童','文体','特色区']
       }
@@ -331,10 +339,6 @@
         if (!this.lists){
           return
         }
-     /*   if (!this.home_data.newItemList){
-          return
-        }*/
-
 
         this.$nextTick(() => {
 
@@ -360,14 +364,37 @@
 
     },
     methods:{
+
+
+
+      goToTop(){
+
+        this.isShowGotoTop = !this.isShowGotoTop
+       /* document.body.scrollTop = document.documentElement.scrollTop = 0;*/
+       /* scrollTo(0,0);*/
+        let timer  = null;
+
+        cancelAnimationFrame(timer);
+        timer = requestAnimationFrame(function fn(){
+          const oTop = document.body.scrollTop || document.documentElement.scrollTop;
+          if(oTop > 0){
+            scrollTo(0,oTop-300);
+            timer = requestAnimationFrame(fn);
+          }else{
+            cancelAnimationFrame(timer);
+          }
+        });
+
+      },
+
       _initScroll(){
-        const lastInner = document.querySelector('.lastInner');
+      /*  const lastInner = document.querySelector('.lastInner');*/
         new BScroll(this.$refs.listContent,{
           click:true,
           scrollX:true
         })
 
-        this.lastInner = new BScroll(lastInner,{
+        new BScroll(this.$refs.lastInner,{
           click:true,
           scrollX:true
         })
@@ -393,75 +420,99 @@
     .home
       width 100%
       height 100%
+      touch-action: none
       .homeHeader
         background-color #fff
         display flex
         flex-direction column
+        position: fixed
         z-index 10
-        .homeContent
-          display: flex
-          flex-flow: row nowrap
-          align-items: center
-          padding: (.21333*75/$rem) (.4*75/$rem)
-          line-height 1.5
-          .logo
-            width (1.84*75/$rem)
-            height (.53333*75/$rem)
-            background-image url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/indexLogo-11d65342f9.png)
-            display inline-block
-            margin-right (.26667*75/$rem)
-            background-size cover
-            background-position center
-          .search
-            display: flex;
-            flex-grow: 1;
-            flex-flow: row nowrap;
-            align-items: center;
-            justify-content: center;
-            height: (.74667*75/$rem)
-            font-size: (.37333*75/$rem)
-            background-color: #ededed;
-            border-radius: (.10667*75/$rem)
-            .search_icon
-              display: inline-block;
-              vertical-align: middle;
-              background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png);
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              width: (.37333*75/$rem)
-              height: (.37333*75/$rem)
-              margin-right: (.13333*75/$rem)
-            span
-              color #666
-
-        .listContent
+        .homeContainer
+          position: fixed!important;
+          left: 0;
+          top: 0;
+          z-index: 5;
           width: 100%
-          overflow: hidden;
-          background: #ffffff;
-          display: flex;
-          padding: 0 0 12px 0;
-          height (60/$rem)
-          flex-flow nowrap
-          .navList
-            padding: 0 0 12px 0;
-            display: flex;
-            flex-direction row
-            justify-content: space-between;
-            align-items: center;
-            li
-              text-align: center;
-              flex-shrink:0;
-              flex-wrap:nowrap;
-              margin: (0.5*75/$rem)
+          background-color #fff
+          &::after
+            content: '';
+            position: absolute;
+            background-color: #d9d9d9;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            bottom: 0
+          .homeContent
+            display: flex
+            flex-flow: row nowrap
+            align-items: center
+            padding: (.21333*75/$rem) (.4*75/$rem)
+            line-height 1.5
+            .logo
+              width (1.84*75/$rem)
+              height (.53333*75/$rem)
+              background-image url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/indexLogo-11d65342f9.png)
+              display inline-block
+              margin-right (.26667*75/$rem)
+              background-size cover
+              background-position center
+            .search
+              display: flex;
+              flex-grow: 1;
+              flex-flow: row nowrap;
+              align-items: center;
+              justify-content: center;
+              height: (.74667*75/$rem)
               font-size: (.37333*75/$rem)
-              &.active
-                padding: 0 0 12px 0;
-                color: #b4282d;
-                border-bottom: 3px solid #b4282d;
+              background-color: #ededed;
+              border-radius: (.10667*75/$rem)
+              .search_icon
+                display: inline-block;
+                vertical-align: middle;
+                background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png);
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                width: (.37333*75/$rem)
+                height: (.37333*75/$rem)
+                margin-right: (.13333*75/$rem)
+              span
+                color #666
+
+          .listContainer
+            width 100%
+            display flex
+            flex-direction column
+            flex 1
+            .listContent
+              width: 100%
+              display: flex;
+              .navList
+                height: .8rem;
+                display: flex;
+                flex-shrink: 0;
+                background: #fff;
+                li
+                  margin-left: .64rem;
+                  position relative
+                  display: block;
+                  padding: 0 .21333rem;
+                  line-height: .8rem;
+                  font-size: .37333rem;
+                  color: #333;
+                  text-align: center;
+                  vertical-align middle
+                  &.active::after
+                    content: ' ';
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: .05333rem;
+                    background-color: #b4282d
       .homeWra
+        margin-top 148px
         margin-bottom (.26667*75/$rem)
         background-color #fff
-        overflow hidden
         .navWra
           height (4.93333*75/$rem)
           position: relative
@@ -1089,7 +1140,7 @@
 
 
 
-    /*  .newsWarp
+     /* .newsWarp
         position: fixed;
         top: 0;
         left: 0;
@@ -1213,4 +1264,15 @@
               margin-top: .32rem;
               display: block;
               color: #333;*/
+      .goToTop
+        display: inline
+        position: fixed;
+        right: .30667rem;
+        bottom: 1.6rem;
+        vertical-align: middle;
+        width: 1.09333rem;
+        height: 1.09333rem;
+        background-image: url(//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/goToTop-7a19216f77.png);
+        background-size: 1.09333rem 1.09333rem;
+        z-index: 2
 </style>

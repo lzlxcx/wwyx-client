@@ -72,14 +72,23 @@
           text-align: center;
           background-color: #fff;
           position: relative
+          &::after
+            content: '';
+            position: absolute;
+            background-color: #d9d9d9;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            bottom: 0
           .logo
-            display: inline-block;
             font-size: .48rem
-
+            position absolute
+            top -1px
+            left 43%
           .right
             position: absolute;
             top: 0;
-            right: .4rem;
+            right: .8rem;
             font-size: .4rem
             .cart
               position: relative;

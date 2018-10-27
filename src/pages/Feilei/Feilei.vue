@@ -35,28 +35,30 @@
         </ul>
       </div>
     </div>-->
-    <div class="navContainer">
-      <div class="navScroll" ref="nav">
-        <ul class="navList">
-          <li v-if="category_data.length" :class="{active:isActive  === index}"  @click="isNow(index,category)"
-              v-for="(category,index) in category_data" :key="index">
-            <a class="txt" href="javascript:;">{{category.name}}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+   <div class="feiLeiContent">
+     <div class="navContainer">
+       <div class="navScroll" ref="nav">
+         <ul class="navList">
+           <li v-if="category_data.length" :class="{active:isActive  === index}"  @click="isNow(index,category)"
+               v-for="(category,index) in category_data" :key="index">
+             <a class="txt" href="javascript:;">{{category.name}}</a>
+           </li>
+         </ul>
+       </div>
+     </div>
 
-    <div class="right">
-      <div class="imgRight" ref="imgRight">
-        <div class="banner" :style="{backgroundImage: `url(${showcategory.bannerUrl})`}">
-          <div class="cnt"></div>
-        </div>
-        <div class="cateList" v-if="category_data.length">
-          <SpecialItem v-if="!showcategory.level" :showcategory = 'showcategory'/>
-          <CategoryItem v-else :showcategory = 'showcategory'/>
-        </div>
-      </div>
-    </div>
+     <div class="right"  ref="rightNav">
+       <div class="imgRight">
+         <div class="banner" :style="{backgroundImage: `url(${showcategory.bannerUrl})`}">
+           <div class="cnt"></div>
+         </div>
+         <div class="cateList" v-if="category_data.length">
+           <SpecialItem v-if="!showcategory.level" :showcategory = 'showcategory'/>
+           <CategoryItem v-else :showcategory = 'showcategory'/>
+         </div>
+       </div>
+     </div>
+   </div>
 
 
   </section>
@@ -94,7 +96,7 @@
           probeType: 1,
           scrollbar:true
         })
-        new BScroll(this.$refs.imgRight,{
+        new BScroll(this.$refs.rightNav,{
           click:true,
         })
       },
@@ -116,6 +118,8 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
+  html,body
+    overflow hidden
   .feiLei
     width 100%
     height 100%
@@ -134,6 +138,13 @@
           padding: 0 .4rem;
           background-color: #fff;
           position: relative
+          :after
+            content: '';
+            position: absolute;
+            background-color: #d9d9d9;
+            width: 100%;
+            height: 1px;
+            bottom 0
           .hdIn
             width: 100%
             display flex
@@ -195,75 +206,79 @@
                 white-space: nowrap;
                 overflow: hidden
 */
-    .navContainer
-      position: absolute;
-      top: 88px
-      left: 0;
-      bottom: 0;
-      z-index: 1;
-      width: 2.16rem;
-      background-color: #fff
-      &::after
-        content: '';
-        position: absolute;
-        background-color: rgba(0,0,0,.15);
-        top: 0;
-        bottom: 0;
-        width: 1px;
-        -webkit-transform-origin: 100% 50% 0;
-        transform-origin: 100% 50% 0;
-        right: 0
-      >.navScroll
-        width 100%
-        height 100%
-        overflow hidden
-        position: relative
-        ul
-          li
-            position relative
-            width: 100%;
-            height: .866667rem;
-            text-align: center;
-            border: none
-            margin-top: .53333rem
-            >.txt
-              display: block;
-              color: #333;
-              font-size: .37333rem;
-              line-height: .66667rem;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-            &.active
-              &::before
-                content: ' ';
-                position: absolute;
-                top: 0;
-                left: 0;
-                height 100%
-                width: .08rem;
-                background-color: #ab2b2b
-              >.txt
-                color: #ab2b2b
-
-    .imgRight
+    .feiLeiContent
       height 100%
-      margin-left: 2.16rem;
-      padding: .4rem .4rem .28rem
-      .banner
-        position: relative;
-        width: 100%;
-        height: 2.56rem;
-        display: table;
-        margin-bottom: .42667rem;
-        background: center no-repeat #f4f4f4;
-        background-size: cover;
-        border-radius: 4px
-        .cnt
-          display: table-cell;
-          vertical-align: middle;
-          text-align: center;
-          font-size: .37333rem;
-          color: #fff
+      background-color #fff
+      .navContainer
+        position: absolute;
+        top: 1.17333rem;
+        left: 0;
+        bottom: 0;
+        z-index:4
+        width: 2.16rem;
+        background-color: #fff
+        &::after
+          content: '';
+          position: absolute;
+          background-color: rgba(0,0,0,.15);
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          -webkit-transform-origin: 100% 50% 0;
+          transform-origin: 100% 50% 0;
+          right: 0
+        >.navScroll
+          width 100%
+          height 100%
+          overflow hidden
+          position: relative
+          ul
+            li
+              position relative
+              width: 100%;
+              height: .866667rem;
+              text-align: center;
+              border: none
+              margin-top: .53333rem
+              >.txt
+                display: block;
+                color: #333;
+                font-size: .37333rem;
+                line-height: .66667rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+              &.active
+                &::before
+                  content: ' ';
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  height 100%
+                  width: .08rem;
+                  background-color: #ab2b2b
+                >.txt
+                  color: #ab2b2b
+
+      .right
+        height 1148px
+        margin-left: 2.16rem;
+        padding: .4rem .4rem .28rem
+        .imgRight
+          .banner
+            position: relative;
+            width: 100%;
+            height: 2.56rem;
+            display: table;
+            margin-bottom: .42667rem;
+            background: center no-repeat #f4f4f4;
+            background-size: cover;
+            border-radius: 4px
+            .cnt
+              display: table-cell;
+              vertical-align: middle;
+              text-align: center;
+              font-size: .37333rem;
+              color: #fff
 
 </style>
